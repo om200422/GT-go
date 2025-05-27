@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GT Go: Your Ultimate Gaming Tournament Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@40400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #00e0ff;
+            --dark-bg: #1a1a1a;
+            --text-color: #f0f0f0;
+            --gradient-start: #00bfff;
+            --gradient-end: #008cff;
+        }
+
+        /* Basic Reset & Font */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden; /* Prevent horizontal scroll due to animations */
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-blue);
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Animations */
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px var(--primary-blue), 0 0 10px var(--primary-blue); }
+            50% { box-shadow: 0 0 10px var(--primary-blue), 0 0 20px var(--primary-blue), 0 0 30px var(--primary-blue); }
+            100% { box-shadow: 0 0 5px var(--primary-blue), 0 0 10px var(--primary-blue); }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulseBorder {
+            0% { border-color: rgba(0, 224, 255, 0.3); }
+            50% { border-color: rgba(0, 224, 255, 0.8); }
+            100% { border-color: rgba(0, 224, 255, 0.3); }
+        }
+
+        /* Header / Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #0f0f0f, #222222);
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(0, 224, 255, 0.3);
+            animation: pulseBorder 4s infinite ease-in-out;
+            border-radius: 10px;
+            margin: 20px;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(0, 224, 255, 0.1), transparent 70%);
+            animation: rotate 15s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            animation: fadeInScale 1s ease-out;
+        }
+
+        .app-logo {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 20px;
+            border-radius: 25px; /* Softer edges for the logo */
+            box-shadow: 0 0 25px rgba(0, 224, 255, 0.5); /* Stronger glow for logo */
+        }
+
+        .hero-section h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px var(--primary-blue);
+            color: var(--primary-blue);
+            font-weight: 700;
+        }
+
+        .hero-section p.tagline {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            text-transform: uppercase;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            border: none;
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.7);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(0, 224, 255, 1);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+            box-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary-blue);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px rgba(0, 224, 255, 1);
+            transform: translateY(-5px);
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .features-section h2 {
+            font-size: 2.8em;
+            margin-bottom: 50px;
+            color: var(--primary-blue);
+            text-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-item {
+            background-color: #222;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 224, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0, 224, 255, 0.1);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 20px rgba(0, 224, 255, 0.5);
+        }
+
+        .feature-item h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: var(--primary-blue);
+        }
+
+        .feature-item p {
+            font-size: 1.1em;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+
+        /* Screenshots Section */
+        .screenshots-section {
+            padding: 60px 20px;
+            background-color: #111;
+            text-align: center;
+        }
+
+        .screenshots-section h2 {
+            font-size: 2.8em;
+            margin-bottom: 50px;
+            color: var(--primary-blue);
+            text-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
+        }
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: block; /* Remove extra space below image */
+        }
+
+        .screenshot-item img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 25px rgba(0, 224, 255, 0.6);
+        }
+
+        /* Telegram Section */
+        .telegram-section {
+            padding: 60px 20px;
+            text-align: center;
+            background-color: #222;
+        }
+
+        .telegram-section h2 {
+            font-size: 2.8em;
+            margin-bottom: 50px;
+            color: var(--primary-blue);
+            text-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
+        }
+
+        .telegram-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .telegram-image {
+            width: clamp(280px, 80%, 600px); /* Responsive width */
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 224, 255, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .telegram-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(0, 224, 255, 0.7);
+        }
+
+        .telegram-section p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0f0f0f;
+            color: #888;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 0.9em;
+            border-top: 1px solid rgba(0, 224, 255, 0.1);
+        }
+
+        /* Pop-up Overlay */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .popup-content {
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 0 30px rgba(0, 224, 255, 0.7);
+            position: relative;
+            animation: fadeInScale 0.4s ease-out;
+        }
+
+        .popup-content h3 {
+            font-size: 2.2em;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+        }
+
+        .popup-content p {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            color: var(--text-color);
+        }
+
+        .popup-buttons {
+            display: flex;
+            flex-direction: column; /* Stack buttons vertically on pop-up */
+            gap: 20px;
+        }
+
+        .popup-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2em;
+            color: #ccc;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .popup-close-btn:hover {
+            color: var(--primary-blue);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 60px 20px;
+                margin: 10px;
+            }
+
+            .hero-section h1 {
+                font-size: 2.5em;
+            }
+
+            .hero-section p.tagline {
+                font-size: 1.2em;
+            }
+
+            .btn {
+                width: 100%; /* Make buttons full width on small screens */
+                padding: 12px 25px;
+                font-size: 1.1em;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .features-section h2,
+            .screenshots-section h2,
+            .telegram-section h2 {
+                font-size: 2.2em;
+            }
+
+            .feature-item {
+                padding: 25px;
+            }
+
+            .feature-item h3 {
+                font-size: 1.5em;
+            }
+
+            .feature-item p {
+                font-size: 1em;
+            }
+
+            .screenshot-grid {
+                grid-template-columns: 1fr; /* Stack screenshots vertically */
+            }
+
+            .telegram-section p {
+                font-size: 1.1em;
+            }
+
+            .popup-content {
+                padding: 30px;
+            }
+
+            .popup-content h3 {
+                font-size: 1.8em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-section h1 {
+                font-size: 2em;
+            }
+
+            .hero-section p.tagline {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Pop-up Overlay (Hidden by Default) -->
+    <div class="popup-overlay" id="downloadPopup">
+        <div class="popup-content">
+            <span class="popup-close-btn" onclick="closePopup()">&times;</span>
+            <h3>Ready to Dominate?</h3>
+            <p>Download the GT Go app now to join exciting tournaments and claim your instant winnings!</p>
+            <div class="popup-buttons">
+                <a href="https://www.mediafire.com/file/jxiokv8u0r5rw1v/base_%25285%2529.apk/file" target="_blank" class="btn btn-primary">
+                    Download GT Go App
+                </a>
+                <a href="https://t.me/Freefire_game_tournament" target="_blank" class="btn btn-secondary">
+                    Join Our Telegram Group
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header / Hero Section -->
+    <header class="hero-section">
+        <div class="hero-content">
+            <img src="https://i.ibb.co/G42Pzkqg/IMG-20250526-204743-717.webp" alt="GT Go App Logo" class="app-logo">
+            <h1>GT Go: Your Ultimate Gaming Tournament Hub</h1>
+            <p class="tagline">Compete in Free Fire & BGMI. Win Big. Get Paid Instantly!</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="showPopup()">
+                    Download GT Go App
+                </button>
+                <a href="https://t.me/Freefire_game_tournament" target="_blank" class="btn btn-secondary">
+                    Join Our Telegram Community
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Features Section -->
+        <section class="features-section">
+            <h2>Why Choose GT Go?</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h3>Instant Payouts</h3>
+                    <p>Get your winnings credited immediately after the match ends. No delays, no waiting!</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Free Fire & BGMI Tournaments</h3>
+                    <p>Participate in daily tournaments for your favorite mobile games, Free Fire and BGMI.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Dedicated Telegram Support</h3>
+                    <p>Our team is active on Telegram to assist you with any query or issue you might face.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Best Management</h3>
+                    <p>Experience seamless tournament organization and professional handling of all events.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>24/7 Problem Solving</h3>
+                    <p>We are always here to help. Reach out anytime, and we'll resolve your problems efficiently.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Fair Play Guaranteed</h3>
+                    <p>We ensure a cheat-free environment for all players to enjoy true competitive gaming.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screenshots Section -->
+        <section class="screenshots-section">
+            <h2>Glimpse Inside GT Go</h2>
+            <p>See how easy it is to navigate tournaments, check scores, and manage your payments.</p>
+            <div class="screenshot-grid">
+                <div class="screenshot-item">
+                    <img src="https://i.ibb.co/dwKRX4Mc/Screenshot-20250526-225612.png" alt="GT Go App Home Page Screenshot">
+                </div>
+                <div class="screenshot-item">
+                    <img src="https://i.ibb.co/svPpdxLT/Screenshot-20250525-150036.png" alt="GT Go App Tournament List Screenshot">
+                </div>
+                <div class="screenshot-item">
+                    <img src="https://i.ibb.co/fYNG5wfR/Screenshot-20250526-113556.png" alt="GT Go App ID & Password Display Screenshot">
+                </div>
+                <div class="screenshot-item">
+                    <img src="https://i.ibb.co/Df9YgpJd/Screenshot-20250526-225637.png" alt="GT Go App Payment History Screenshot">
+                </div>
+            </div>
+        </section>
+
+        <!-- Telegram Section -->
+        <section class="telegram-section">
+            <h2>Join Our Thriving Telegram Community!</h2>
+            <p>Don't miss out! Our Telegram group is where all the action happens. Get instant updates, direct support, and connect with other passionate gamers. It's the best place for quick problem-solving and announcements.</p>
+            <img src="https://i.ibb.co/gb94b7jB/Screenshot-20250526-230315.png" alt="GT Go Telegram Group Screenshot" class="telegram-image">
+            <a href="https://t.me/Freefire_game_tournament" target="_blank" class="btn btn-primary" style="margin-top: 40px;">
+                Join Our Telegram Group Now!
+            </a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 GT Go. All Rights Reserved.</p>
+        <p>Developed with passion for gamers.</p>
+    </footer>
+
+    <script>
+        function showPopup() {
+            document.getElementById('downloadPopup').style.display = 'flex';
+        }
+
+        function closePopup() {
+            document.getElementById('downloadPopup').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
